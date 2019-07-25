@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd   
+        http://www.springframework.org/schema/mvc   
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd   
+        http://www.springframework.org/schema/task   
+        http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+
+    <!--配置视图解析器  -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!-- 全局异常处理器
+        只要实现HandlerExceptionResolver接口就是全局异常处理器
+         -->
+    <!--<bean class="com.ssm.exception.CustomExceptionResolver"></bean>-->
+
+    <!--使用mvc的注解驱动代替上面的映射器和适配器
+    默认加载很多参数的绑定方法
+    -->
+    <!--配置自动扫描类-->
+    <!--表明com.ssm.controller，如果某个类的头上带有特定的注解
+    @Component，@Repository，@Service，@Controller，就会将这个对象作为Bean注册进Spring容器。-->
+    <context:component-scan base-package="com.ssm.controller"></context:component-scan>
+    <!--<context:component-scan base-package="com.ssm.service"></context:component-scan>-->
+
+    <!-- 默认的注解映射 -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!-- 解除servlet对静态资源文件访问的限制，使得静态资源先经过 -->
+    <mvc:default-servlet-handler />
+
+    <!--文件上传下载-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="DefaultEncoding" value="UTF-8" />
+        <property name="MaxUploadSize" value="1048576" />
+        <property name="MaxInMemorySize" value="4096"/>
+    </bean>
+
+</beans>

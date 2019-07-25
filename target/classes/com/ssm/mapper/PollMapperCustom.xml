@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.mapper.PollMapperCustom">
+
+
+    <insert id="createPoll" parameterType="Integer">
+        INSERT INTO poll (vote_id,option1_num,option2_num,option3_num,option4_num)VALUES('${voteid}',0,0,0,0)
+    </insert>
+
+    <update id="insertPoll" parameterType="poll">
+        update poll set
+        <if test="option1Num!=null" >
+            option1_num = option1_num + 1
+        </if>
+        <if test="option2Num!=null" >
+            option2_num = option2_num + 1
+        </if>
+        <if test="option3Num!=null" >
+            option3_num = option3_num + 1
+        </if>
+        <if test="option4Num!=null" >
+            option4_num = option4_num + 1
+        </if>
+    </update>
+
+    <select id="selectPoll" parameterType="Integer" resultMap="pollCustom">
+        select * from poll where vote_id = '${voteid}'
+    </select>
+
+    <resultMap id="pollCustom" type="poll">
+        <result property="voteId" column="vote_id"/>
+        <result property="option1Num" column="option1_num"/>
+        <result property="option2Num" column="option2_num"/>
+        <result property="option3Num" column="option3_num"/>
+        <result property="option4Num" column="option4_num"/>
+    </resultMap>
+
+</mapper>

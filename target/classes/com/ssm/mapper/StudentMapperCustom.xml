@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.mapper.StudentMapperCustom">
+
+    <select id="findStudentByUP" parameterType="String"
+            resultType="student">
+        SELECT * from student where username = '${username}' and password = '${password}'
+    </select>
+
+    <select id="changePassword" parameterType="String">
+      update student set username ='${username}' , password = '${password}'
+    </select>
+
+    <insert id="registerUser" parameterType="student">
+     INSERT INTO student (username,password)VALUES ('${username}','${password}')
+    </insert>
+</mapper>

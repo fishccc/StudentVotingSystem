@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.mapper.MaterialMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.po.Material" >
+    <id column="materials_id" property="materialsId" jdbcType="INTEGER" />
+    <result column="lecturer_id" property="lecturerId" jdbcType="INTEGER" />
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="CHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    materials_id, lecturer_id, class_id, title, note
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.po.MaterialExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from material
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from material
+    where materials_id = #{materialsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from material
+    where materials_id = #{materialsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.po.MaterialExample" >
+    delete from material
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.po.Material" >
+    insert into material (materials_id, lecturer_id, class_id, 
+      title, note)
+    values (#{materialsId,jdbcType=INTEGER}, #{lecturerId,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, 
+      #{title,jdbcType=CHAR}, #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.po.Material" >
+    insert into material
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="materialsId != null" >
+        materials_id,
+      </if>
+      <if test="lecturerId != null" >
+        lecturer_id,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="materialsId != null" >
+        #{materialsId,jdbcType=INTEGER},
+      </if>
+      <if test="lecturerId != null" >
+        #{lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=CHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.po.MaterialExample" resultType="java.lang.Integer" >
+    select count(*) from material
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update material
+    <set >
+      <if test="record.materialsId != null" >
+        materials_id = #{record.materialsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lecturerId != null" >
+        lecturer_id = #{record.lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.classId != null" >
+        class_id = #{record.classId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=CHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update material
+    set materials_id = #{record.materialsId,jdbcType=INTEGER},
+      lecturer_id = #{record.lecturerId,jdbcType=INTEGER},
+      class_id = #{record.classId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=CHAR},
+      note = #{record.note,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.po.Material" >
+    update material
+    <set >
+      <if test="lecturerId != null" >
+        lecturer_id = #{lecturerId,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=CHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where materials_id = #{materialsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.po.Material" >
+    update material
+    set lecturer_id = #{lecturerId,jdbcType=INTEGER},
+      class_id = #{classId,jdbcType=INTEGER},
+      title = #{title,jdbcType=CHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where materials_id = #{materialsId,jdbcType=INTEGER}
+  </update>
+</mapper>
